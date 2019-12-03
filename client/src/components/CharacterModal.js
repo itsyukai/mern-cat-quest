@@ -10,6 +10,7 @@ import {
   Input
 } from "reactstrap";
 
+import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { addCharacter } from "../actions/characterActions";
 
@@ -17,6 +18,9 @@ class CharacterModal extends Component {
   state = {
     modal: false,
     name: ""
+  };
+  static propTypes = {
+    isAuthenticated: PropTypes.bool
   };
   toggle = () => {
     this.setState({
@@ -44,13 +48,18 @@ class CharacterModal extends Component {
   render() {
     return (
       <div>
-        <Button
-          colo="dark"
-          style={{ marginBottom: "2rem" }}
-          onClick={this.toggle}
-        >
-          Add Item
-        </Button>
+        {this.props.isAuthenticated ? (
+          <Button
+            colo="dark"
+            style={{ marginBottom: "2rem" }}
+            onClick={this.toggle}
+          >
+            Add Item
+          </Button>
+        ) : (
+          <h4 className="mb-3 ml-4"> Please log in to manage characters</h4>
+        )}
+
         <Modal isOpen={this.state.modal}>
           <ModalHeader toggle={this.toggle}>Add to Shopping List</ModalHeader>
           <ModalBody>
@@ -77,6 +86,7 @@ class CharacterModal extends Component {
 }
 
 const mapStateToProps = state => ({
-  character: state.character
+  character: state.character,
+  isAuthenticated: state.auth.isAuthenticated
 });
 export default connect(mapStateToProps, { addCharacter })(CharacterModal);

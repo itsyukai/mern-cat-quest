@@ -1,16 +1,15 @@
 const express = require("express"); // require in nodeJS is always "require once"
 const mongoose = require("mongoose"); // MongoDB object modeler. Makes dealing with Mongo DB easier
-const bodyParser = require("body-parser"); // Lets us get data from body of requests
 const path = require("path");
-const characters = require("./routes/api/characters");
+const config = require("config");
 
 const app = express();
 
 //Bodyparser Middleware
-app.use(bodyParser.json());
+app.use(express.json());
 
-// Mongo DB URI
-const db = require("./config/keys").mongoURI;
+// DB Config
+const db = config.get("mongoURI");
 
 // Connect to Mongo
 mongoose
@@ -23,7 +22,9 @@ mongoose
   .catch(err => console.log(err));
 
 // Use Routes
-app.use("/api/characters", characters);
+app.use("/api/characters", require("./routes/api/characters"));
+app.use("/api/users", require("./routes/api/users"));
+app.use("/api/auth", require("./routes/api/auth"));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {

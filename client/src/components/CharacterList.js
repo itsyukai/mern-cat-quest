@@ -8,6 +8,12 @@ import PropTypes from "prop-types";
 class CharacterList extends Component {
   state = {};
 
+  propTypes = {
+    getCharacters: PropTypes.func.isRequired,
+    character: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool
+  };
+
   componentDidMount() {
     this.props.getCharacters();
   }
@@ -24,14 +30,17 @@ class CharacterList extends Component {
             {characters.map(({ _id, name }) => (
               <CSSTransition key={_id} timeout={500} classNames="fade">
                 <ListGroupItem>
-                  <Button
-                    className="remove-btn"
-                    color="danger"
-                    size="sm"
-                    onClick={this.onDeleteClick.bind(this, _id)}
-                  >
-                    &times;
-                  </Button>
+                  {this.props.isAuthenticated ? (
+                    <Button
+                      className="remove-btn"
+                      color="danger"
+                      size="sm"
+                      onClick={this.onDeleteClick.bind(this, _id)}
+                    >
+                      &times;
+                    </Button>
+                  ) : null}
+
                   {name}
                 </ListGroupItem>
               </CSSTransition>
@@ -43,13 +52,9 @@ class CharacterList extends Component {
   }
 }
 
-CharacterList.propTypes = {
-  getCharacters: PropTypes.func.isRequired,
-  character: PropTypes.object.isRequired
-};
-
 const mapStateToProps = state => ({
-  character: state.character
+  character: state.character,
+  isAuthenticated: state.auth.isAuthenticated
 });
 export default connect(mapStateToProps, { getCharacters, deleteCharacter })(
   CharacterList

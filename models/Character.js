@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 const CharacterSchema = new Schema({
   name: {
     type: String,
-    requireD: true
+    required: true
   },
   date: {
     type: Date,
