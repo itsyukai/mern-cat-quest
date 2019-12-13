@@ -19,3 +19,11 @@
   opacity: 0.01;
   transition: opacity 1000ms ease-in;
 }
+
+.character-builder--toast {
+  max-width: none;
+}
+
+.display-flex {
+  display: flex;
+}
