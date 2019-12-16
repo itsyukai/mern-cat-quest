@@ -56,7 +56,7 @@ class CharacterModal extends Component {
             style={{ marginBottom: "2rem" }}
             onClick={this.toggle}
           >
-            Character Modal
+            Use Character Modal
           </Button>
         ) : (
           <h4 className="mb-3 ml-4"> Please log in to manage characters</h4>
@@ -72,7 +72,7 @@ class CharacterModal extends Component {
                   type="text"
                   name="name"
                   id="character"
-                  placeholder="Add shopping character"
+                  placeholder="Add character"
                   onChange={this.onChange}
                 />
                 <Button color="dark" style={{ marginTop: "2rem" }} block>

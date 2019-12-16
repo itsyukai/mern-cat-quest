@@ -20,20 +20,15 @@ function App() {
     store.dispatch(loadUser());
   });
 
-  const toggleCharacterBuilder = () => setShow(!showCharacterBuilder);
-
   return (
     <Provider store={store}>
       <div className="App">
         <header className="App-header">
           <AppNavbar />
           <Container>
-            <Button onClick={toggleCharacterBuilder}>Add Character</Button>
+            <CharacterBuilder />
             <CharacterModal />
             <CharacterList />
-            {showCharacterBuilder ? (
-              <CharacterBuilder handleClick={toggleCharacterBuilder} />
-            ) : null}
           </Container>
         </header>
       </div>
