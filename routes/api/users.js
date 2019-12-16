@@ -37,7 +37,7 @@ router.post("/", (req, res) => {
           // Using JSON web token to sign
           // In order to verify integrity
           jwt.sign(
-            { id: user.id },
+            { _id: user.id },
             config.get("jwtSecret"),
             { expiresIn: 3600 },
             (err, token) => {
@@ -45,7 +45,7 @@ router.post("/", (req, res) => {
               res.json({
                 token,
                 user: {
-                  id: user.id,
+                  _id: user.id,
                   name: user.name,
                   email: user.email
                 }
