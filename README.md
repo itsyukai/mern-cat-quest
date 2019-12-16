@@ -9,6 +9,7 @@ SETUP:
 3. run: npm install
 4. run: npm client-install
 5. run: npm run dev
+
 Features:
 - User authentication
 - Character ownership
