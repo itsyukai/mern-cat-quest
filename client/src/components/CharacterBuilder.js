@@ -20,7 +20,17 @@ import PropTypes from "prop-types";
 import "../App.css";
 
 class CharacterBuilder extends Component {
-  state = {};
+  state = {
+    name = "",
+    race = "",
+    level = 1,
+    strength = 10,
+    dexterity = 10,
+    constitution = 10,
+    intelligence = 10,
+    wisdom = 10,
+    charisma = 10,
+  };
 
   propTypes = {
     handleClick: PropTypes.func.isRequired,
@@ -47,6 +57,7 @@ class CharacterBuilder extends Component {
                       type="text"
                       name="name"
                       id="characterName"
+                      value={this.state.name}
                       placeholder="Name"
                     />
                   </Container>
@@ -60,6 +71,8 @@ class CharacterBuilder extends Component {
                       type="text"
                       name="race"
                       id="race"
+                      value={this.state.race}
+
                       placeholder="Race"
                     />
                   </Col>
@@ -69,6 +82,8 @@ class CharacterBuilder extends Component {
                       type="text"
                       name="class"
                       id="class"
+                      value={this.state.class}
+
                       placeholder="Class"
                     />
                   </Col>
@@ -76,10 +91,13 @@ class CharacterBuilder extends Component {
                   <Col xs="6" sm="4">
                     <Label for="level">Level</Label>
                     <Input
-                      type="text"
+                      type="number"
                       name="level"
                       id="level"
                       placeholder="Level"
+                      min={0}
+                      max={99}
+                      step="1"
                     />
                   </Col>
                 </Row>
@@ -96,7 +114,7 @@ class CharacterBuilder extends Component {
                           id="strength"
                           placeholder="10"
                           min={0}
-                          max={100}
+                          max={99}
                           step="1"
                         />
                       </Row>
@@ -108,7 +126,7 @@ class CharacterBuilder extends Component {
                           id="dexterity"
                           placeholder="10"
                           min={0}
-                          max={100}
+                          max={99}
                           step="1"
                         />
                       </Row>
@@ -120,7 +138,7 @@ class CharacterBuilder extends Component {
                           id="constitution"
                           placeholder="10"
                           min={0}
-                          max={100}
+                          max={99}
                           step="1"
                         />
                       </Row>
@@ -132,7 +150,7 @@ class CharacterBuilder extends Component {
                           id="intelligence"
                           placeholder="10"
                           min={0}
-                          max={100}
+                          max={99}
                           step="1"
                         />
                       </Row>
@@ -144,7 +162,7 @@ class CharacterBuilder extends Component {
                           id="wisdom"
                           placeholder="10"
                           min={0}
-                          max={100}
+                          max={99}
                           step="1"
                         />
                       </Row>
@@ -158,7 +176,7 @@ class CharacterBuilder extends Component {
                           id="charisma"
                           placeholder="10"
                           min={0}
-                          max={100}
+                          max={99}
                           step="1"
                         />
                       </Row>
