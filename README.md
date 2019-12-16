@@ -5,6 +5,7 @@ MERN Stack dnd tool following Travery Media's tutorial: https://www.youtube.com/
 Features:
 - User authentication
 - Character ownership
+
 To Do:
 - Encounters
   -> Be able to add monsters from 5e SRD
