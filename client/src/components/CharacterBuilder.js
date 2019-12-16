@@ -33,7 +33,7 @@ class CharacterBuilder extends Component {
     charisma: 10
   };
 
-  propTypes = {
+  static propTypes = {
     // handleClick: PropTypes.func.isRequired,
     addCharacter: PropTypes.func.isRequired,
     character: PropTypes.object.isRequired,
