@@ -8,10 +8,10 @@ import {
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
 
-export const getCharacters = () => dispatch => {
+export const getCharacters = id => (dispatch, getState) => {
   dispatch(setCharactersLoading());
   axios
-    .get("/api/characters")
+    .get(`/api/characters/${id}`, tokenConfig(getState))
     .then(res =>
       dispatch({
         type: GET_CHARACTERS,
@@ -37,7 +37,7 @@ export const addCharacter = character => (dispatch, getState) => {
 };
 export const deleteCharacter = id => (dispatch, getState) => {
   axios
-    .delete(`/api/characters/${id}`, tokenConfig(getState))
+    .delete(`/api/characters/d/${id}`, tokenConfig(getState))
     .then(res =>
       dispatch({
         type: DELETE_CHARACTER,

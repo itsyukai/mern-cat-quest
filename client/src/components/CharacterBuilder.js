@@ -21,15 +21,15 @@ import "../App.css";
 
 class CharacterBuilder extends Component {
   state = {
-    name = "",
-    race = "",
-    level = 1,
-    strength = 10,
-    dexterity = 10,
-    constitution = 10,
-    intelligence = 10,
-    wisdom = 10,
-    charisma = 10,
+    name: "",
+    race: "",
+    level: 1,
+    strength: 10,
+    dexterity: 10,
+    constitution: 10,
+    intelligence: 10,
+    wisdom: 10,
+    charisma: 10
   };
 
   propTypes = {
@@ -72,7 +72,6 @@ class CharacterBuilder extends Component {
                       name="race"
                       id="race"
                       value={this.state.race}
-
                       placeholder="Race"
                     />
                   </Col>
@@ -83,7 +82,6 @@ class CharacterBuilder extends Component {
                       name="class"
                       id="class"
                       value={this.state.class}
-
                       placeholder="Class"
                     />
                   </Col>

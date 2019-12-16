@@ -8,14 +8,19 @@ import PropTypes from "prop-types";
 class CharacterList extends Component {
   state = {};
 
-  propTypes = {
+  static propTypes = {
     getCharacters: PropTypes.func.isRequired,
     character: PropTypes.object.isRequired,
-    isAuthenticated: PropTypes.bool
+    isAuthenticated: PropTypes.bool,
+    user: PropTypes.object
   };
 
-  componentDidMount() {
-    this.props.getCharacters();
+  componentDidUpdate(prevProps) {
+    if (prevProps.isAuthenticated !== this.props.isAuthenticated) {
+      if (this.props.isAuthenticated) {
+        this.props.getCharacters(this.props.user._id);
+      }
+    }
   }
 
   onDeleteClick = id => {
@@ -26,11 +31,11 @@ class CharacterList extends Component {
     return (
       <Container>
         <ListGroup>
-          <TransitionGroup className="character-list">
-            {characters.map(({ _id, name }) => (
-              <CSSTransition key={_id} timeout={500} classNames="fade">
-                <ListGroupItem>
-                  {this.props.isAuthenticated ? (
+          {this.props.isAuthenticated ? (
+            <TransitionGroup className="character-list">
+              {characters.map(({ _id, name }) => (
+                <CSSTransition key={_id} timeout={500} classNames="fade">
+                  <ListGroupItem>
                     <Button
                       className="remove-btn"
                       color="danger"
@@ -39,13 +44,13 @@ class CharacterList extends Component {
                     >
                       &times;
                     </Button>
-                  ) : null}
 
-                  {name}
-                </ListGroupItem>
-              </CSSTransition>
-            ))}
-          </TransitionGroup>
+                    {name}
+                  </ListGroupItem>
+                </CSSTransition>
+              ))}
+            </TransitionGroup>
+          ) : null}
         </ListGroup>
       </Container>
     );
@@ -54,7 +59,8 @@ class CharacterList extends Component {
 
 const mapStateToProps = state => ({
   character: state.character,
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user
 });
 export default connect(mapStateToProps, { getCharacters, deleteCharacter })(
   CharacterList

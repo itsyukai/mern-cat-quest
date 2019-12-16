@@ -20,7 +20,8 @@ class CharacterModal extends Component {
     name: ""
   };
   static propTypes = {
-    isAuthenticated: PropTypes.bool
+    isAuthenticated: PropTypes.bool,
+    user: PropTypes.object
   };
   toggle = () => {
     this.setState({
@@ -35,6 +36,7 @@ class CharacterModal extends Component {
   onSubmit = e => {
     e.preventDefault();
     const newCharacter = {
+      owner: this.props.user._id,
       name: this.state.name
     };
 
@@ -54,14 +56,14 @@ class CharacterModal extends Component {
             style={{ marginBottom: "2rem" }}
             onClick={this.toggle}
           >
-            Add Item
+            Character Modal
           </Button>
         ) : (
           <h4 className="mb-3 ml-4"> Please log in to manage characters</h4>
         )}
 
         <Modal isOpen={this.state.modal}>
-          <ModalHeader toggle={this.toggle}>Add to Shopping List</ModalHeader>
+          <ModalHeader toggle={this.toggle}>Add to Character List</ModalHeader>
           <ModalBody>
             <Form onSubmit={this.onSubmit}>
               <FormGroup>
@@ -87,6 +89,7 @@ class CharacterModal extends Component {
 
 const mapStateToProps = state => ({
   character: state.character,
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user
 });
 export default connect(mapStateToProps, { addCharacter })(CharacterModal);

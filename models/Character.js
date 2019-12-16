@@ -3,6 +3,10 @@ const Schema = mongoose.Schema;
 
 //Create Schema
 const CharacterSchema = new Schema({
+  owner: {
+    type: String,
+    required: true
+  },
   name: {
     type: String,
     required: true
