@@ -7,11 +7,11 @@ Features:
 - Character ownership
 
 To Do:
-- Encounters
-  -> Be able to add monsters from 5e SRD
-  -> Be able to add characters 
-  -> Keep track of turn order
-- Character Builder
-  -> Add spells from 5e SRD
-  -> Add races/classes from 5e SRD
+- Encounters:
+  - Be able to add monsters from 5e SRD
+  - Be able to add characters 
+  - Keep track of turn order
+- Character Builder:
+  - Add spells from 5e SRD
+  - Add races/classes from 5e SRD
   
