@@ -10,11 +10,9 @@ import { loadUser } from "./actions/authActions";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import CharacterBuilder from "./components/CharacterBuilder";
+import CharacterSheet from "./components/CharacterSheet";
 
 function App() {
-  const [showCharacterBuilder, setShow] = useState(false);
-
   // Similar to componentDidMount and componentDidUpdate
   useEffect(() => {
     store.dispatch(loadUser());
@@ -26,7 +24,7 @@ function App() {
         <header className="App-header">
           <AppNavbar />
           <Container>
-            <CharacterBuilder />
+            <CharacterSheet />
             <CharacterModal />
             <CharacterList />
           </Container>
