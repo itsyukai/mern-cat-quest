@@ -11,6 +11,39 @@ const CharacterSchema = new Schema({
     type: String,
     required: true
   },
+  race: {
+    type: String,
+    required: false
+  },
+  classes: [
+    {
+      name: { type: String },
+      level: { type: Number }
+    }
+  ],
+  proficiency: {
+    type: Number,
+    required: false
+  },
+  skills: [
+    {
+      name: {
+        type: String
+      },
+      level: {
+        type: Number
+      }
+    }
+  ],
+  stats: {
+    health: Number,
+    strength: Number,
+    dexterity: Number,
+    constitution: Number,
+    intelligence: Number,
+    wisdom: Number,
+    charisma: Number
+  },
   date: {
     type: Date,
     default: Date.now

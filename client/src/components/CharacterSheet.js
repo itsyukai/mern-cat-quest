@@ -8,22 +8,19 @@ import {
   FormGroup,
   Label,
   Input,
-  FormText,
   Toast,
   ToastBody,
-  ToastHeader,
-  CustomInput
+  ToastHeader
 } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
-import { addCharacter } from "../actions/characterActions";
+import { addCharacter, getCharacters } from "../actions/characterActions";
 import PropTypes from "prop-types";
 import "../App.css";
 
 class CharacterSheet extends Component {
   state = {
     modal: false,
-    c_name: "",
     name: "",
     race: "",
     level: 1,
@@ -36,10 +33,11 @@ class CharacterSheet extends Component {
   };
 
   static propTypes = {
-    // handleClick: PropTypes.func.isRequired,
     addCharacter: PropTypes.func.isRequired,
     character: PropTypes.object.isRequired,
-    isAuthenticated: PropTypes.bool
+    getCharacters: PropTypes.object.isRequired,
+    isAuthenticated: PropTypes.bool,
+    user: PropTypes.object
   };
   toggle = () => {
     this.setState({
@@ -54,10 +52,22 @@ class CharacterSheet extends Component {
   };
 
   onSubmit = e => {
-    var target = "c_" + e.target.name;
-    this.setState({
-      [target]: e.target.value
-    });
+    e.preventDefault();
+
+    const newCharacter = {
+      owner: this.props.user._id,
+      name: this.state.name,
+      race: this.state.race,
+      level: this.state.level,
+      strength: this.state.strength,
+      dexterity: this.state.dexterity,
+      constitution: this.state.constitution,
+      intelligence: this.state.intelligence,
+      wisdom: this.state.wisdom,
+      charisma: this.state.charisma
+    };
+
+    this.props.addCharacter(newCharacter);
   };
 
   render() {
@@ -70,26 +80,14 @@ class CharacterSheet extends Component {
             style={{ marginBottom: "2rem" }}
             onClick={this.toggle}
           >
-            View Characters
+            View/Edit Character
           </Button>
         ) : null}
         <Container>
           <Toast className="character-builder--toast" isOpen={this.state.modal}>
-            <Form>
+            <Form onSubmit={this.onSubmit}>
               <ToastHeader toggle={this.toggle}>
-                <FormGroup inline>
-                  <div>
-                    Name:
-                    <CustomInput
-                      type="text"
-                      name="name"
-                      id="characterName"
-                      value={this.state.name}
-                      onChange={this.onChange}
-                      placeholder="Name"
-                    />
-                  </div>
-                </FormGroup>
+                {/* <h4>{this.state.name ? this.state.name : "Name"}</h4> */}
               </ToastHeader>
               <ToastBody>
                 <FormGroup>
@@ -131,7 +129,7 @@ class CharacterSheet extends Component {
                 </FormGroup>
                 <FormGroup>
                   <Label for="stats">
-                    <h4>Stats</h4>
+                    <h6>Stats</h6>
                   </Label>
 
                   <Row>
@@ -203,6 +201,9 @@ class CharacterSheet extends Component {
                       />
                     </Col>
                   </Row>
+                  <Button color="dark" style={{ marginTop: "2rem" }} block>
+                    Add Character
+                  </Button>
                 </FormGroup>
               </ToastBody>
             </Form>
@@ -215,6 +216,10 @@ class CharacterSheet extends Component {
 
 const mapStateToProps = state => ({
   character: state.character,
-  isAuthenticated: state.auth.isAuthenticated
+  isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user
 });
-export default connect(mapStateToProps, { addCharacter })(CharacterSheet);
+export default connect(mapStateToProps, {
+  getCharacters,
+  addCharacter
+})(CharacterSheet);

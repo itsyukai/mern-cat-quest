@@ -1,13 +1,14 @@
 const express = require("express");
 const router = express.Router();
 const auth = require("../../middleware/auth");
+const mongoose = require("mongoose");
 
 // Character Model
 const Character = require("../../models/Character");
 
-// @route   GET api/characters
+// @route   GET api/characters/:id
 // @desc    Get All Characters
-// @access  Public
+// @access  Private
 router.get("/:id", auth, (req, res) => {
   Character.find({ owner: `${req.params.id}` })
     .sort({ date: -1 })
@@ -18,15 +19,43 @@ router.get("/:id", auth, (req, res) => {
 // @desc    Create a Character
 // @access  Private
 router.post("/", auth, (req, res) => {
-  const newCharacter = new Character({
-    owner: req.body.owner,
-    name: req.body.name
-  });
+  if (req.body._id) {
+    const newCharacter = {
+      owner: req.body.owner,
+      name: req.body.name,
+      race: req.body.race,
+      classes: req.body.classes,
+      proficiency: req.body.proficiency,
+      skills: req.body.skills,
+      stats: req.body.stats,
+      date: req.body.date
+    };
 
-  newCharacter.save().then(character => res.json(character));
+    Character.findOneAndUpdate({ _id: req.body._id }, newCharacter, {
+      upsert: true,
+      useFindAndModify: false
+    })
+      .then(character => res.json(character))
+      .catch(err => res.status(500).json({ err }));
+  } else {
+    const newCharacter = new Character({
+      owner: req.body.owner,
+      name: req.body.name,
+      race: req.body.race,
+      classes: req.body.classes,
+      proficiency: req.body.proficiency,
+      skills: req.body.skills,
+      stats: req.body.stats,
+      date: req.body.date
+    });
+    newCharacter
+      .save()
+      .then(character => res.json(character))
+      .catch(err => res.status(500).json({ err }));
+  }
 });
 
-// @route   DELETE api/characters/d:id
+// @route   DELETE api/characters/d/:id
 // @desc    Delete a Character
 // @access  Private
 router.delete("/d/:id", auth, (req, res) => {
