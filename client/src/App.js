@@ -2,7 +2,10 @@ import React, { useEffect, useState } from "react";
 import AppNavbar from "./components/AppNavbar";
 import CharacterList from "./components/CharacterList";
 import CharacterModal from "./components/CharacterModal";
-import { Button, Container } from "reactstrap";
+import CharacterSheet from "./components/CharacterSheet";
+import Bestiary from "./components/Bestiary";
+
+import { Container } from "reactstrap";
 
 import { Provider } from "react-redux";
 import store from "./store";
@@ -10,7 +13,6 @@ import { loadUser } from "./actions/authActions";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import CharacterSheet from "./components/CharacterSheet";
 
 function App() {
   // Similar to componentDidMount and componentDidUpdate
@@ -24,8 +26,9 @@ function App() {
         <header className="App-header">
           <AppNavbar />
           <Container>
+            <Bestiary />
             <CharacterSheet />
-            <CharacterModal />
+            {/* <CharacterModal /> */}
             <CharacterList />
           </Container>
         </header>
