@@ -10,15 +10,16 @@ import {
 } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import "../App.css";
+import Monster from "./Monster.js";
 
 class Bestiary extends Component {
   state = {
     modal: false,
-    monster: null,
-    loading: false,
+    monsters: [],
     query: ""
   };
 
+  onComponentDidMount() {}
   toggle = () => {
     this.setState({
       modal: !this.state.modal
@@ -31,66 +32,50 @@ class Bestiary extends Component {
     });
   };
 
+  handleCardClose = monster => {
+    this.removeMonster(monster);
+  };
+  handleNotFound = () => {};
+  removeMonster = monster => {
+    var monsters = [...this.state.monsters];
+    var index = monsters.indexOf(monster);
+    if (index !== -1) {
+      monsters.splice(index, 1);
+      this.setState({ monsters: monsters });
+    }
+  };
+
   onSubmit = e => {
     e.preventDefault();
-
-    this.setState({ loading: true });
-
     const query = async () => {
       const response = await fetch(
         `https://api.open5e.com/monsters/${this.state.query}`
       );
-      const myJson = await response.json(); //extract JSON from the http response
-      this.setState({
-        loading: false,
-        monster: myJson
-      });
+      const jsonMonster = await response.json(); //extract JSON from the http response
+      if (jsonMonster.detail === "Not found.") {
+        this.handleNotFound();
+      } else {
+        this.setState(prevState => ({
+          monsters: [...prevState.monsters, jsonMonster]
+        }));
+      }
     };
     query();
   };
 
-  renderMonsterInformation = () => {
-    const { monster } = this.state;
-    if (this.state.loading) {
-      return <Container> Loading . . .</Container>;
+  renderMonsterCards = () => {
+    const { monsters } = this.state;
+    if (monsters.length > 0) {
+      const cards = monsters.map(mon => (
+        <Monster
+          key={mon.name}
+          monster={mon}
+          onClose={() => this.handleCardClose(mon)}
+        />
+      ));
+      return <div>{cards}</div>;
     } else {
-      if (this.state.monster) {
-        return (
-          <Container>
-            = Monster Name: ${monster.name} <br />
-            [Size] {monster.size}
-            <br />
-            [Type] {monster.type}
-            <br />
-            [Subtype] {monster.subtype}
-            <br />
-            [Alignment] {monster.alignment}
-            <br />
-            [Armor Class] {monster.armor_class}
-            <br />
-            [Armor Description]{monster.armor_desc}
-            <br />
-            [Hit Points]{monster.hit_points}
-            <br />
-            [Hit Dice]{monster.hit_dice}
-            <br />= Ability Scores / Saves = \ [Strength] {
-              monster.strength
-            } / {monster.strength_save}
-            <br />
-            [Dexterity] {monster.dexterity} / {monster.dexterity_save}
-            <br />
-            [Constitution] {monster.constitution} / {monster.constitution_save}
-            <br />
-            [Wisdom] {monster.wisdom} / {monster.wisdom_save}
-            <br />
-            [Charisma] {monster.dexterity} / {monster.dexterity_save}
-            <br />
-            [Dexterity] {monster.dexterity} / {monster.dexterity_save}
-          </Container>
-        );
-      } else {
-        return null;
-      }
+      return null;
     }
   };
 
@@ -117,12 +102,12 @@ class Bestiary extends Component {
               />
             </ToastBody>
           </Form>
-          {this.renderMonsterInformation()}
         </Toast>
+        {this.renderMonsterCards()}
       </Container>
     );
-  }
-}
+  } // render
+} // class
 
 const mapStateToProps = state => ({
   character: state.character,
