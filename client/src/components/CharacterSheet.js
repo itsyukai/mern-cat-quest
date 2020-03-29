@@ -35,7 +35,7 @@ class CharacterSheet extends Component {
   static propTypes = {
     addCharacter: PropTypes.func.isRequired,
     character: PropTypes.object.isRequired,
-    getCharacters: PropTypes.object.isRequired,
+    getCharacters: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool,
     user: PropTypes.object
   };
