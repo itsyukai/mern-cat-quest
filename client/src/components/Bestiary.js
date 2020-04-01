@@ -49,14 +49,14 @@ class Bestiary extends Component {
     e.preventDefault();
     const query = async () => {
       const response = await fetch(
-        `https://api.open5e.com/monsters/${this.state.query}`
+        `https://api.open5e.com/monsters/?search=${this.state.query}`
       );
       const jsonMonster = await response.json(); //extract JSON from the http response
-      if (jsonMonster.detail === "Not found.") {
+      if (jsonMonster.count === 0) {
         this.handleNotFound();
-      } else {
+      } else if (jsonMonster.count < 10) {
         this.setState(prevState => ({
-          monsters: [...prevState.monsters, jsonMonster]
+          monsters: [...prevState.monsters, ...jsonMonster.results]
         }));
       }
     };
@@ -68,7 +68,7 @@ class Bestiary extends Component {
     if (monsters.length > 0) {
       const cards = monsters.map(mon => (
         <Monster
-          key={mon.name}
+          key={mon.slug}
           monster={mon}
           onClose={() => this.handleCardClose(mon)}
         />
