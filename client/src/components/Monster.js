@@ -1,5 +1,12 @@
 import React, { Component } from "react";
-import { Card, CardHeader, CardBody } from "reactstrap";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  Toast,
+  ToastHeader,
+  ToastBody
+} from "reactstrap";
 import PropTypes from "prop-types";
 
 class Monster extends Component {
@@ -11,9 +18,11 @@ class Monster extends Component {
   render() {
     const { monster } = this.props;
     return (
-      <Card>
-        <CardHeader>{monster.name ? monster.name : "N/A"}</CardHeader>
-        <CardBody>
+      <Toast>
+        <ToastHeader toggle={this.props.onClose}>
+          {monster.name ? monster.name : "N/A"}
+        </ToastHeader>
+        <ToastBody>
           [Size] {monster.size}
           <br />
           [Type] {monster.type}
@@ -42,8 +51,8 @@ class Monster extends Component {
           [Charisma] {monster.dexterity} / {monster.dexterity_save}
           <br />
           [Dexterity] {monster.dexterity} / {monster.dexterity_save}
-        </CardBody>
-      </Card>
+        </ToastBody>
+      </Toast>
     );
   }
 }
