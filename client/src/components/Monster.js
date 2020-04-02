@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import {
   Card,
   CardHeader,
@@ -17,6 +17,21 @@ class Monster extends Component {
 
   render() {
     const { monster } = this.props;
+    const actions = monster.actions.map(action => (
+      <Fragment key={action.name}>
+        {action.name}
+        <br />
+        {action.desc}
+        <br />
+        {action.attack_bonus}
+        <br />
+        {action.damage_dice}
+        <br />
+        {action.damage_bonus}
+        <br />
+      </Fragment>
+    ));
+
     return (
       <Toast>
         <ToastHeader toggle={this.props.onClose}>
@@ -38,8 +53,7 @@ class Monster extends Component {
           [Hit Points]{monster.hit_points}
           <br />
           [Hit Dice]{monster.hit_dice}
-          <br />= Ability Scores / Saves =
-          <br />
+          <ToastHeader> Ability Scores / Saves</ToastHeader>
           [Strength] {monster.strength} / {monster.strength_save}
           <br />
           [Dexterity] {monster.dexterity} / {monster.dexterity_save}
@@ -51,6 +65,8 @@ class Monster extends Component {
           [Charisma] {monster.dexterity} / {monster.dexterity_save}
           <br />
           [Dexterity] {monster.dexterity} / {monster.dexterity_save}
+          <ToastHeader>Actions</ToastHeader>
+          {actions}
         </ToastBody>
       </Toast>
     );
