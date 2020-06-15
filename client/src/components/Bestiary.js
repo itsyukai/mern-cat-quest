@@ -6,37 +6,37 @@ import {
   Input,
   Toast,
   ToastBody,
-  ToastHeader
+  ToastHeader,
 } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
-import "../App.css";
+import "../App.scss";
 import Monster from "./Monster.js";
 
 class Bestiary extends Component {
   state = {
     modal: false,
     monsters: [],
-    query: ""
+    query: "",
   };
 
   onComponentDidMount() {}
   toggle = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  handleCardClose = monster => {
+  handleCardClose = (monster) => {
     this.removeMonster(monster);
   };
   handleNotFound = () => {};
-  removeMonster = monster => {
+  removeMonster = (monster) => {
     var monsters = [...this.state.monsters];
     var index = monsters.indexOf(monster);
     if (index !== -1) {
@@ -45,7 +45,7 @@ class Bestiary extends Component {
     }
   };
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
     const query = async () => {
       const response = await fetch(
@@ -55,8 +55,8 @@ class Bestiary extends Component {
       if (jsonMonster.count === 0) {
         this.handleNotFound();
       } else if (jsonMonster.count < 10) {
-        this.setState(prevState => ({
-          monsters: [...prevState.monsters, ...jsonMonster.results]
+        this.setState((prevState) => ({
+          monsters: [...prevState.monsters, ...jsonMonster.results],
         }));
       }
     };
@@ -66,7 +66,7 @@ class Bestiary extends Component {
   renderMonsterCards = () => {
     const { monsters } = this.state;
     if (monsters.length > 0) {
-      const cards = monsters.map(mon => (
+      const cards = monsters.map((mon) => (
         <Monster
           key={mon.slug}
           monster={mon}
@@ -109,9 +109,9 @@ class Bestiary extends Component {
   } // render
 } // class
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   character: state.character,
   isAuthenticated: state.auth.isAuthenticated,
-  user: state.auth.user
+  user: state.auth.user,
 });
 export default Bestiary;

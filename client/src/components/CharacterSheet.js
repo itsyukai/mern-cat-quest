@@ -10,13 +10,13 @@ import {
   Input,
   Toast,
   ToastBody,
-  ToastHeader
+  ToastHeader,
 } from "reactstrap";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { connect } from "react-redux";
 import { addCharacter, getCharacters } from "../actions/characterActions";
 import PropTypes from "prop-types";
-import "../App.css";
+import "../App.scss";
 
 class CharacterSheet extends Component {
   state = {
@@ -29,7 +29,7 @@ class CharacterSheet extends Component {
     constitution: 10,
     intelligence: 10,
     wisdom: 10,
-    charisma: 10
+    charisma: 10,
   };
 
   static propTypes = {
@@ -37,21 +37,21 @@ class CharacterSheet extends Component {
     character: PropTypes.object.isRequired,
     getCharacters: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool,
-    user: PropTypes.object
+    user: PropTypes.object,
   };
   toggle = () => {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
     });
   };
 
-  onChange = e => {
+  onChange = (e) => {
     this.setState({
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
-  onSubmit = e => {
+  onSubmit = (e) => {
     e.preventDefault();
 
     const newCharacter = {
@@ -64,7 +64,7 @@ class CharacterSheet extends Component {
       constitution: this.state.constitution,
       intelligence: this.state.intelligence,
       wisdom: this.state.wisdom,
-      charisma: this.state.charisma
+      charisma: this.state.charisma,
     };
 
     this.props.addCharacter(newCharacter);
@@ -214,12 +214,12 @@ class CharacterSheet extends Component {
   }
 }
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   character: state.character,
   isAuthenticated: state.auth.isAuthenticated,
-  user: state.auth.user
+  user: state.auth.user,
 });
 export default connect(mapStateToProps, {
   getCharacters,
-  addCharacter
+  addCharacter,
 })(CharacterSheet);

@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
 import AppNavbar from "./components/AppNavbar";
-import CharacterList from "./components/CharacterList";
-import CharacterModal from "./components/CharacterModal";
-import CharacterSheet from "./components/CharacterSheet";
-import Bestiary from "./components/Bestiary";
+import AccessForm from "./components/auth/AccessForm";
+import CharacterScreen from "./components/CharacterScreen";
 
 import { Container } from "reactstrap";
 
@@ -12,7 +10,7 @@ import store from "./store";
 import { loadUser } from "./actions/authActions";
 
 import "bootstrap/dist/css/bootstrap.min.css";
-import "./App.css";
+import "./App.scss";
 
 function App() {
   // Similar to componentDidMount and componentDidUpdate
@@ -26,10 +24,8 @@ function App() {
         <header className="App-header">
           <AppNavbar />
           <Container>
-            <Bestiary />
-            <CharacterSheet />
-            {/* <CharacterModal /> */}
-            <CharacterList />
+            <AccessForm />
+            <CharacterScreen />
           </Container>
         </header>
       </div>
