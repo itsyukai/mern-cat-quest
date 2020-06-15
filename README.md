@@ -1,6 +1,4 @@
-# dndtome
-
-MERN Stack dnd tool following Travery Media's tutorial: https://www.youtube.com/watch?v=PBTYxXADG_k
+# MERN Cat Quest
 
 SETUP:
 1. Clone repo
@@ -11,15 +9,5 @@ SETUP:
 5. run: npm run dev
 
 Features:
-- User authentication
-- Character ownership
-
-To Do:
-- Encounters:
-  - Add monsters from 5e SRD
-  - Add characters 
-  - Keep track of turn order
-- Character Builder:
-  - Add spells from 5e SRD
-  - Add races/classes from 5e SRD
+- Cat
   
