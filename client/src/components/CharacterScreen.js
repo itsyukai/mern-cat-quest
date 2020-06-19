@@ -5,7 +5,9 @@ import { connect } from "react-redux";
 import { addCharacter, getCharacters } from "../actions/characterActions";
 import PropTypes from "prop-types";
 import "../App.scss";
-import cat from "../imgs/skinny-blue-cat.png";
+import color from "../imgs/CAT_SHEET.gif";
+import "./CharacterScreen.scss";
+
 class CharacterScreen extends Component {
   state = {
     name: "",
@@ -45,8 +47,13 @@ class CharacterScreen extends Component {
       <div>
         {this.props.isAuthenticated ? (
           <div>
-            {/* TODO: add image upload capability */}
-            <img src={cat} width="64" height="64" />
+            <div className="avatarArrows"></div>
+            <div className="avatarContainer">
+              <div className="avatar">
+                <div className="color">asdfadsf</div>
+              </div>
+            </div>
+            <div className="avatarArrows"></div>
           </div>
         ) : null}
       </div>
