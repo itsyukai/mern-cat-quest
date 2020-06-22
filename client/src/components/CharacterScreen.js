@@ -44,16 +44,24 @@ class CharacterScreen extends Component {
   render() {
     const { characters } = this.props.character;
     return (
-      <div>
+      <div className="characterContainer">
         {this.props.isAuthenticated ? (
-          <div>
-            <div className="avatarArrows"></div>
+          <div className="avatarContainer">
+            <div className="avatarArrowsContainer">
+              <div className="avatarLeftArrow" />
+              <div className="avatarLeftArrow" />
+              <div className="avatarLeftArrow" />
+            </div>
             <div className="avatarContainer">
               <div className="avatar">
                 <div className="color">asdfadsf</div>
               </div>
             </div>
-            <div className="avatarArrows"></div>
+            <div className="avatarArrowsContainer">
+              <div className="avatarRightArrow" />
+              <div className="avatarRightArrow" />
+              <div className="avatarRightArrow" />
+            </div>
           </div>
         ) : null}
       </div>

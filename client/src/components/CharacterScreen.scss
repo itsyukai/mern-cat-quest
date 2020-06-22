@@ -1,10 +1,31 @@
-.avatar {
-  color: blue;
-
-  .color {
-    width: 100px;
-    height: 100px;
-    color: red;
-    background-image: url("../imgs/CAT_SHEET.gif");
+.characterContainer {
+}
+.avatarContainer {
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  .avatarArrowsContainer {
+    display: flex;
+    flex-direction: column;
+    .avatarLeftArrow {
+      width: 24px;
+      height: 24px;
+      background-image: url("../imgs/arrow-left.png");
+    }
+    .avatarRightArrow {
+      width: 24px;
+      height: 24px;
+      background-image: url("../imgs/arrow-right.png");
+    }
+  }
+  .avatar {
+    color: blue;
+    margin: 0 auto;
+    .color {
+      width: 48px;
+      height: 48px;
+      color: red;
+      background-image: url("../imgs/CAT_SHEET.gif");
+    }
   }
 }
