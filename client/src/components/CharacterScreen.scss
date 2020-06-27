@@ -1,8 +1,10 @@
 .characterContainer {
 }
 .avatarContainer {
+  width: 72px;
   margin: 0 auto;
   display: flex;
+  flex-direction: row;
   justify-content: center;
   .avatarArrowsContainer {
     display: flex;
@@ -22,10 +24,15 @@
     color: blue;
     margin: 0 auto;
     .color {
-      width: 48px;
-      height: 48px;
+      width: 72px;
+      height: 72px;
       color: red;
       background-image: url("../imgs/CAT_SHEET.gif");
     }
   }
+}
+
+h3 {
+  display: flex;
+  justify-content: center;
 }
