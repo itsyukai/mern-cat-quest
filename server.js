@@ -16,15 +16,16 @@ mongoose
   .connect(db, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useCreateIndex: true
+    useCreateIndex: true,
   }) // Adding new mongo url parser and discovery/monitoring engine
   .then(() => console.log("MongoDB Connected.."))
-  .catch(err => console.log(err));
+  .catch((err) => console.log(err));
 
 // Use Routes
 app.use("/api/characters", require("./routes/api/characters"));
 app.use("/api/users", require("./routes/api/users"));
 app.use("/api/auth", require("./routes/api/auth"));
+app.use("/api/inventories", require("./routes/api/inventories"));
 
 // Serve static assets if in production
 if (process.env.NODE_ENV === "production") {
