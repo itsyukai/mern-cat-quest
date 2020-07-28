@@ -49,12 +49,13 @@ class AppNavbar extends Component {
 
     const guestLinks = (
       <div>
-        <MenuItem onClick={this.handleClose}>
+        Gotta put a settings button here or somethin'
+        {/* <MenuItem onClick={this.handleClose}>
           <RegisterModal />
         </MenuItem>
         <MenuItem onClick={this.handleClose}>
           <LoginModal />
-        </MenuItem>
+        </MenuItem> */}
       </div>
     );
     return (

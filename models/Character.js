@@ -5,35 +5,22 @@ const Schema = mongoose.Schema;
 const CharacterSchema = new Schema({
   owner: {
     type: String,
-    required: true
+    required: true,
   },
   name: {
     type: String,
-    required: true
+    required: true,
   },
-  race: {
-    type: String,
-    required: false
-  },
-  classes: [
-    {
-      name: { type: String },
-      level: { type: Number }
-    }
-  ],
-  proficiency: {
-    type: Number,
-    required: false
-  },
+
   skills: [
     {
       name: {
-        type: String
+        type: String,
       },
       level: {
-        type: Number
-      }
-    }
+        type: Number,
+      },
+    },
   ],
   stats: {
     health: Number,
@@ -42,12 +29,12 @@ const CharacterSchema = new Schema({
     constitution: Number,
     intelligence: Number,
     wisdom: Number,
-    charisma: Number
+    charisma: Number,
   },
   date: {
     type: Date,
-    default: Date.now
-  }
+    default: Date.now,
+  },
 });
 
 module.exports = Character = mongoose.model("character", CharacterSchema);

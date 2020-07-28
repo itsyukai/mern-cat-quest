@@ -50,7 +50,9 @@ class CharacterScreen extends Component {
 
   onAttack = () => {
     this.state.player.damage(10);
-    this.setState({ message: this.state.message + "jacob took 10 dmg\n" });
+    this.setState({
+      message: this.state.message + this.state.player.health + "\n",
+    });
   };
   componentDidMount() {
     const newPlayer = new Player("jacob");
