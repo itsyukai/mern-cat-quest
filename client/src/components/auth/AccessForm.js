@@ -25,10 +25,10 @@ class AccessForm extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { error, isAuthenticated } = this.props;
+    const { error } = this.props;
     if (error !== prevProps.error) {
       // Check for login error
-      if (error.id === "LOGIN_FAIL") {
+      if (error.id === "LOGIN_FAIL" || error.id === "REGISTER_FAIL") {
         this.setState({ msg: error.msg.msg });
       } else {
         this.setState({ msg: null });
@@ -116,6 +116,7 @@ class AccessForm extends Component {
     /* Register */
     const registerForm = (
       <div className="form-container">
+        {this.state.msg ? <Alert color="danger">{this.state.msg}</Alert> : null}
         <Form onSubmit={this.register}>
           <FormGroup>
             <Label for="name"> Name </Label>
