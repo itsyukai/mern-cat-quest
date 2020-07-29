@@ -3,7 +3,7 @@ import thunk from "redux-thunk";
 import rootReducer from "./reducers";
 
 const initialState = {};
-const middleware = [thunk];
+const middleware = [thunk]; // Thunk allows us to make asynchronous requests
 const composeEnhancers = window.REDUX_DEVTOOLS_EXTENSION_COMPOSE || compose;
 
 const enhancer = composeEnhancers(
