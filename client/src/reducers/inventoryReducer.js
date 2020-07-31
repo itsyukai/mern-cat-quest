@@ -17,7 +17,7 @@ export default function (state = initialState, action) {
     case GET_INVENTORY:
       return {
         ...state,
-        inventory: action.paydoad,
+        inventory: action.payload,
         loading: false,
       };
     case ADD_ITEM: {

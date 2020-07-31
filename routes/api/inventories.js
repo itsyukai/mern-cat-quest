@@ -5,15 +5,6 @@ const mongoose = require("mongoose");
 
 const Inventory = require("../../models/Inventory");
 
-// @route   GET api/inventories/:id
-// @desc    Get Inventory
-// @access  Private
-router.get("/:id", auth, (req, res) => {
-  Inventory.find()
-    .sort({ date: -1 })
-    .then((inventory) => res.json(inventory));
-});
-
 // @route   POST api/inventories
 // @desc    Create/Update inventory
 // @access  Private

@@ -4,6 +4,7 @@ import { Button, Form, FormGroup, Label, Input, Alert } from "reactstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login, register } from "../../actions/authActions";
+import { loadInventory } from "../../actions/inventoryActions";
 import { clearErrors } from "../../actions/errorActions";
 import "./AccessForm.scss";
 
@@ -17,6 +18,7 @@ class AccessForm extends Component {
   };
 
   static propTypes = {
+    loadInventory: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool,
     error: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
@@ -25,7 +27,10 @@ class AccessForm extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { error } = this.props;
+    const { error, isAuthenticated } = this.props;
+    if (isAuthenticated !== prevProps.isAuthenticated) {
+      loadInventory();
+    }
     if (error !== prevProps.error) {
       // Check for login error
       if (error.id === "LOGIN_FAIL" || error.id === "REGISTER_FAIL") {
@@ -174,6 +179,9 @@ const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
 });
-export default connect(mapStateToProps, { register, login, clearErrors })(
-  AccessForm
-);
+export default connect(mapStateToProps, {
+  loadInventory,
+  register,
+  login,
+  clearErrors,
+})(AccessForm);

@@ -7,6 +7,7 @@ const auth = require("../../middleware/auth");
 
 // User Model
 const User = require("../../models/User");
+const Inventory = require("../../models/Inventory");
 
 // @route   Post api/auth
 // @desc    Authenticate user
@@ -58,5 +59,14 @@ router.get("/user", auth, (req, res) => {
   User.findById(req.user.id)
     .select("-password")
     .then((user) => res.json(user));
+});
+
+// @route   Get api/auth/inventory
+// @desc    Get user's inventory
+// @access  Private
+router.get("/inventory", auth, (req, res) => {
+  Inventory.find({ owner: `${req.user.id}` }).then((inventory) =>
+    res.json(inventory)
+  );
 });
 module.exports = router;

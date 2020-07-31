@@ -6,16 +6,18 @@ import {
   INVENTORY_LOADING,
   INVENTORY_LOADED,
   ADD_CHARACTER,
+  UPDATE_ITEM_AMOUNT,
 } from "./types";
 
 import { tokenConfig } from "./authActions";
 import { returnErrors } from "./errorActions";
 
 // redux-thunk allows us to dispatch the action asynchronously
-export const getInventory = (id) => (dispatch, getState) => {
-  dispatch(setInventoryLoading());
+export const loadInventory = () => (dispatch, getState) => {
+  console.log("inventoryActions: loadInventory");
+  dispatch({ type: INVENTORY_LOADING });
   axios
-    .get(`/api/inventory`, tokenConfig(getState))
+    .get(`/api/auth/inventory`, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: GET_INVENTORY,
@@ -54,9 +56,4 @@ export const updateItemAmount = (id, amount) => (dispatch, getState) => {
         payload: res.data,
       })
     );
-};
-export const setInventoryLoading = () => {
-  return {
-    type: INVENTORY_LOADING,
-  };
 };
