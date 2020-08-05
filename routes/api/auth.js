@@ -65,7 +65,7 @@ router.get("/user", auth, (req, res) => {
 // @desc    Get user's inventory
 // @access  Private
 router.get("/inventory", auth, (req, res) => {
-  Inventory.find({ owner: `${req.user.id}` }).then((inventory) =>
+  Inventory.findOne({ owner: `${req.user.id}` }).then((inventory) =>
     res.json(inventory)
   );
 });

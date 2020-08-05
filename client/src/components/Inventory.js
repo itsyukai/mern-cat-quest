@@ -4,10 +4,8 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import "./Inventory.scss";
-import { Button, Paper } from "@material-ui/core";
+import { Paper, List, ListItem } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
-
-import MessageLog from "./MessageLog";
 
 const StyledPaper = withStyles({
   root: {
@@ -21,23 +19,29 @@ class Inventory extends Component {
   static propTypes = {
     user: PropTypes.object,
     isAuthenticated: PropTypes.bool,
-    inventory: PropTypes.object,
+    inventory: PropTypes.array,
   };
 
   render() {
-    return (
-      <div>
-        {this.props.isAuthenticated ? (
-          <StyledPaper>
-            <h3> Inventory</h3>
-          </StyledPaper>
-        ) : null}
-      </div>
-    );
+    const { inventory, isAuthenticated } = this.props;
+    let displayInventory = inventory
+      ? inventory.map((item) => (
+          <ListItem key={item.name}>
+            {item.name} : {item.quantity}
+          </ListItem>
+        ))
+      : null;
+    return isAuthenticated ? (
+      <StyledPaper>
+        <h3>Inventory</h3>
+        <List>{displayInventory}</List>
+      </StyledPaper>
+    ) : null;
   }
 }
 
 const mapStateToProps = (state) => ({
+  inventory: state.inventory.inventory,
   isAuthenticated: state.auth.isAuthenticated,
   user: state.auth.user,
 });

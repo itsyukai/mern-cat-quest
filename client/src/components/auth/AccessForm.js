@@ -18,6 +18,7 @@ class AccessForm extends Component {
   };
 
   static propTypes = {
+    token: PropTypes.string,
     loadInventory: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool,
     error: PropTypes.object.isRequired,
@@ -27,9 +28,10 @@ class AccessForm extends Component {
   };
 
   componentDidUpdate(prevProps) {
-    const { error, isAuthenticated } = this.props;
-    if (isAuthenticated !== prevProps.isAuthenticated) {
-      loadInventory();
+    const { error, token } = this.props;
+
+    if (token !== prevProps.token) {
+      this.props.loadInventory();
     }
     if (error !== prevProps.error) {
       // Check for login error
@@ -176,6 +178,7 @@ class AccessForm extends Component {
 }
 
 const mapStateToProps = (state) => ({
+  token: state.auth.token,
   isAuthenticated: state.auth.isAuthenticated,
   error: state.error,
 });
