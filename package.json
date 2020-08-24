@@ -1,7 +1,7 @@
 {
-  "name": "dnd_tome",
+  "name": "mern_cat",
   "version": "1.0.0",
-  "description": "Dungeon and Dragons tool for DMs and Players. 5th edition.",
+  "description": "You're a cat doing cat things",
   "main": "server.js",
   "scripts": {
     "client-install": "npm install --prefix client",
