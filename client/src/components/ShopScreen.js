@@ -10,8 +10,21 @@ import {
   TableHead,
   TableRow,
   Paper,
+  withStyles,
+  Typography,
 } from "@material-ui/core";
 
+const StyledContainer = withStyles({
+  root: {
+    width: "600px",
+    margin: "auto",
+  },
+})(TableContainer);
+const StyledHeader = withStyles({
+  root: {
+    textAlign: "center",
+  },
+})(Typography);
 class ShopScreen extends Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool,
@@ -41,7 +54,7 @@ class ShopScreen extends Component {
   render() {
     const { catalogue } = this.state;
     let displayCatalogue = catalogue.map((item) => (
-      <TableRow>
+      <TableRow key={item.name}>
         <TableCell>{item.name}</TableCell>
         <TableCell align="right">{item.price}</TableCell>
       </TableRow>
@@ -50,10 +63,18 @@ class ShopScreen extends Component {
     return (
       <Fragment>
         {this.props.isAuthenticated ? (
-          <Table>
-            <TableHead>Shop</TableHead>
-            <TableBody>{displayCatalogue}</TableBody>
-          </Table>
+          <StyledContainer component={Paper}>
+            <StyledHeader variant="h5">Shop</StyledHeader>
+            <Table size="small">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Name</TableCell>
+                  <TableCell align="right">Price</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>{displayCatalogue}</TableBody>
+            </Table>
+          </StyledContainer>
         ) : null}
       </Fragment>
     );

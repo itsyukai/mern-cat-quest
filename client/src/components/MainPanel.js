@@ -14,21 +14,46 @@ const StyledPaper = withStyles({
   },
 })(Paper);
 class MainPanel extends Component {
+  state = {
+    activeTab: "shop",
+  };
   static propTypes = {
     isAuthenticated: PropTypes.bool,
   };
 
+  getTabContent() {
+    switch (this.state.activeTab) {
+      case "shop":
+        return <ShopScreen />;
+      case "character":
+      default:
+        return <CharacterScreen />;
+    }
+  }
+
+  handleTabs = (e) => {
+    this.setState({ activeTab: e });
+  };
   render() {
     return (
       <div className="MainPanel">
         {this.props.isAuthenticated ? (
           <StyledPaper>
             <div className="tabs">
-              <Button className="tab-character">Character</Button>
-              <Button className="tab-shop">Shop</Button>
+              <Button
+                className="tab-character"
+                onClick={() => this.handleTabs("character")}
+              >
+                Character
+              </Button>
+              <Button
+                className="tab-shop"
+                onClick={() => this.handleTabs("shop")}
+              >
+                Shop
+              </Button>
             </div>
-            <CharacterScreen />
-            <ShopScreen />
+            {this.getTabContent()}
           </StyledPaper>
         ) : null}
       </div>
