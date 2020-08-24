@@ -4,7 +4,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
 import "./Inventory.scss";
-import { Paper, List, ListItem } from "@material-ui/core";
+import { Button, Paper, List, ListItem } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
 const StyledPaper = withStyles({
@@ -13,6 +13,12 @@ const StyledPaper = withStyles({
     marginTop: "1rem",
   },
 })(Paper);
+
+const StyledListItem = withStyles({
+  root: {
+    justifyContent: "space-between",
+  },
+})(ListItem);
 class Inventory extends Component {
   state = {};
 
@@ -21,14 +27,19 @@ class Inventory extends Component {
     isAuthenticated: PropTypes.bool,
     inventory: PropTypes.array,
   };
-
+  handleClick = (i) => {};
   render() {
     const { inventory, isAuthenticated } = this.props;
     let displayInventory = inventory
       ? inventory.map((item) => (
-          <ListItem key={item.name}>
-            {item.name} : {item.quantity}
-          </ListItem>
+          <StyledListItem key={item.name}>
+            <div className="left">
+              {item.name} : {item.quantity}
+            </div>
+            <div className="right">
+              <Button>+</Button>/<Button>-</Button>
+            </div>
+          </StyledListItem>
         ))
       : null;
     return isAuthenticated ? (

@@ -26,19 +26,20 @@ export default function (state = initialState, action) {
       };
 
     case USER_LOADED:
+      console.log(action.payload);
       return {
         ...state,
+        ...action.payload,
         isAuthenticated: true,
         isLoading: false,
         isAdmin: action.payload.isAdmin,
-        user: action.payload,
+        user: action.payload.user,
       };
     case LOGIN_SUCCESS:
       localStorage.setItem("token", action.payload.token);
       return {
         ...state,
         ...action.payload,
-        isAdmin: false,
         isAuthenticated: true,
         isAdmin: action.payload.user.isAdmin,
         isLoading: false,

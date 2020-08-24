@@ -5,38 +5,60 @@ const mongoose = require("mongoose");
 
 const Inventory = require("../../models/Inventory");
 
+// @route   Get api/inventories
+// @desc    Get user's inventory
+// @access  Private
+router.get("/", auth, async (req, res) => {
+  try {
+    const inventory = await Inventory.findOne({ owner: req.user.id });
+
+    if (!inventory) throw Error("No inventory found for user");
+    res.json(inventory);
+  } catch (e) {
+    res.status(400).json({ msg: e.message });
+  }
+});
+
 // @route   POST api/inventories
-// @desc    Create/Update inventory
+// @desc    Create inventory
 // @access  Private
 router.post("/", auth, (req, res) => {
   const newInventory = new Inventory({
     owner: req.body.owner,
     items: req.body.items,
   });
-  if (req.body._id) {
-    Inventory.findOneAndUpdate({ _id: req.body._id }, newInventory, {
-      upsert: true,
-      useFindAndModify: false,
-    })
-      .then((inventory) => res.json(inventory))
-      .catch((err) => res.status(500).json({ err }));
-  } else {
-    newInventory
-      .save()
-      .then((inventory) => res.json(inventory))
-      .catch((err) => res.status(500).json({ err }));
-  }
+
+  newInventory
+    .save()
+    .then((inventory) => res.json(inventory))
+    .catch((err) => res.status(500).json({ err }));
 });
 
-// @route   DELETE api/inventorys/d/:id
+// @route   PUT api/inventories/u/:id
+// @desc    Update inventory
+// @access  Private
+
+router.put("/", auth, (req, res) => {
+  const updatedInventory = {
+    owner: req.body.owner,
+    items: req.body.items,
+  };
+
+  Inventory.findOneAndUpdate({ owner: req.body.owner }, updatedInventory, {
+    upsert: true,
+    useFindAndModify: false,
+  })
+    .then((inventory) => res.json(inventory))
+    .catch((err) => res.status(500).json({ err }));
+});
+
+// @route   DELETE api/inventories/d/:id
 // @desc    Delete inventory (as part of account deletion)
 // @access  Private
 
 router.delete("/d/:id", auth, (req, res) => {
-  Inventory.findById(req.params.id)
-    .then((inventory) =>
-      inventory.remove().then(() => res.json({ success: true }))
-    )
+  Inventory.findByIdAndDelete(req.params.id)
+    .then((inventory) => res.json({ inventory, success: true }))
     .catch((err) => res.status(404).json({ success: false }));
 });
 

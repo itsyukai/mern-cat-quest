@@ -1,12 +1,11 @@
 import axios from "axios";
 import {
   GET_INVENTORY,
-  ADD_ITEM,
-  REMOVE_ITEM,
+  CREATE_INVENTORY,
+  DELETE_INVENTORY,
   INVENTORY_LOADING,
   INVENTORY_LOADED,
-  ADD_CHARACTER,
-  UPDATE_ITEM_AMOUNT,
+  UPDATE_INVENTORY,
 } from "./types";
 
 import { tokenConfig } from "./authActions";
@@ -14,10 +13,9 @@ import { returnErrors } from "./errorActions";
 
 // redux-thunk allows us to dispatch the action asynchronously
 export const loadInventory = () => (dispatch, getState) => {
-  console.log("inventoryActions: loadInventory");
   dispatch({ type: INVENTORY_LOADING });
   axios
-    .get(`/api/auth/inventory`, tokenConfig(getState))
+    .get(`/api/inventories`, tokenConfig(getState))
     .then((res) => {
       dispatch({
         type: GET_INVENTORY,
@@ -25,16 +23,22 @@ export const loadInventory = () => (dispatch, getState) => {
       });
     })
     .catch((err) =>
-      dispatch(returnErrors(err.response.data, err.response.status))
+      dispatch(
+        returnErrors(
+          err.response.data,
+          err.response.status,
+          "INVENTORY_NOT_FOUND"
+        )
+      )
     );
 };
 
-export const addItem = (item) => (dispatch, getState) => {
+export const createInventory = (inventory) => (dispatch, getState) => {
   axios
-    .post("/api/inventory", item, tokenConfig(getState))
+    .post("/api/inventories", inventory, tokenConfig(getState))
     .then((res) =>
       dispatch({
-        type: ADD_CHARACTER,
+        type: CREATE_INVENTORY,
         payload: res.data,
       })
     )
@@ -43,17 +47,25 @@ export const addItem = (item) => (dispatch, getState) => {
     );
 };
 
-export const removeItem = (id) => (dispatch, getState) => {
-  axios.post(`/api/inventory/r/${id}`, tokenConfig(getState));
-};
-
-export const updateItemAmount = (id, amount) => (dispatch, getState) => {
+export const deleteInventory = () => (dispatch, getState) => {
   axios
-    .post(`/api/inventory/u/${id}:${amount}`, amount, tokenConfig(getState))
+    .delete(`/api/inventories/}`, tokenConfig(getState))
     .then((res) =>
       dispatch({
-        type: UPDATE_ITEM_AMOUNT,
+        type: DELETE_INVENTORY,
         payload: res.data,
       })
+    )
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
     );
+};
+
+export const updateInventory = (inventory) => (dispatch, getState) => {
+  axios.put(`/api/inventories/`, inventory, tokenConfig(getState)).then((res) =>
+    dispatch({
+      type: UPDATE_INVENTORY,
+      payload: res.data,
+    })
+  );
 };

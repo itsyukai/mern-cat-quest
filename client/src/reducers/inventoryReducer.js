@@ -1,8 +1,7 @@
 import {
   GET_INVENTORY,
-  ADD_ITEM,
-  UPDATE_ITEM_AMOUNT,
-  REMOVE_ITEM,
+  CREATE_INVENTORY,
+  UPDATE_INVENTORY,
   INVENTORY_LOADING,
   INVENTORY_LOADED,
 } from "../actions/types";
@@ -20,24 +19,16 @@ export default function (state = initialState, action) {
         inventory: action.payload.items,
         loading: false,
       };
-    case ADD_ITEM: {
+    case CREATE_INVENTORY: {
       return {
         ...state,
-        inventory: [action.payload, ...state.inventory],
+        inventory: action.payload.items,
       };
     }
-    case REMOVE_ITEM: {
+    case UPDATE_INVENTORY: {
       return {
         ...state,
-        inventory: state.inventory.filter(
-          (item) => item._id !== action.payload
-        ),
-      };
-    }
-    case UPDATE_ITEM_AMOUNT: {
-      return {
-        ...state,
-        inventory: action.payload,
+        inventory: action.payload.items,
       };
     }
     case INVENTORY_LOADING:
