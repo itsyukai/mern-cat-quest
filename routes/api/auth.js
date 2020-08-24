@@ -55,18 +55,20 @@ router.post("/", (req, res) => {
 // @route   Get api/auth/user
 // @desc    Get user data
 // @access  Private
-router.get("/user", auth, (req, res) => {
-  User.findById(req.user.id)
-    .select("-password")
-    .then((user) => res.json(user));
+// router.get("/user", auth, (req, res) => {
+//   User.findById(req.user.id)
+//     .select("-password")
+//     .then((user) => res.json(user));
+// });
+router.get("/user", auth, async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+
+    if (!user) throw Error("User does not exist");
+    res.json(user);
+  } catch (e) {
+    res.status(400).json({ msg: e.message });
+  }
 });
 
-// @route   Get api/auth/inventory
-// @desc    Get user's inventory
-// @access  Private
-router.get("/inventory", auth, (req, res) => {
-  Inventory.findOne({ owner: `${req.user.id}` }).then((inventory) =>
-    res.json(inventory)
-  );
-});
 module.exports = router;
