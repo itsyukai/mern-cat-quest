@@ -4,7 +4,7 @@ import { Button, Form, FormGroup, Label, Input, Alert } from "reactstrap";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { login, register } from "../../actions/authActions";
-import { loadInventory } from "../../actions/inventoryActions";
+import { loadInventory, createInventory } from "../../actions/inventoryActions";
 import { clearErrors } from "../../actions/errorActions";
 import "./AccessForm.scss";
 
@@ -20,7 +20,9 @@ class AccessForm extends Component {
   static propTypes = {
     token: PropTypes.string,
     loadInventory: PropTypes.func.isRequired,
+    createInventory: PropTypes.func.isRequired,
     isAuthenticated: PropTypes.bool,
+    user: PropTypes.object,
     error: PropTypes.object.isRequired,
     login: PropTypes.func.isRequired,
     register: PropTypes.func.isRequired,
@@ -37,6 +39,15 @@ class AccessForm extends Component {
       // Check for login error
       if (error.id === "LOGIN_FAIL" || error.id === "REGISTER_FAIL") {
         this.setState({ msg: error.msg.msg });
+      } else if (
+        error.id === "INVENTORY_NOT_FOUND" &&
+        this.props.isAuthenticated
+      ) {
+        const newInventory = {
+          owner: this.props.user._id,
+          items: [],
+        };
+        this.props.createInventory(newInventory);
       } else {
         this.setState({ msg: null });
       }
@@ -78,7 +89,6 @@ class AccessForm extends Component {
       email,
       password,
     };
-
     this.props.register(newUser);
   };
 
@@ -180,6 +190,7 @@ class AccessForm extends Component {
 const mapStateToProps = (state) => ({
   token: state.auth.token,
   isAuthenticated: state.auth.isAuthenticated,
+  user: state.auth.user,
   error: state.error,
 });
 export default connect(mapStateToProps, {
@@ -187,4 +198,5 @@ export default connect(mapStateToProps, {
   register,
   login,
   clearErrors,
+  createInventory,
 })(AccessForm);
