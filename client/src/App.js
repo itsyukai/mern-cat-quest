@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import AppNavbar from "./components/AppNavbar";
 import AccessForm from "./components/auth/AccessForm";
-import CharacterScreen from "./components/CharacterScreen";
+import MainPanel from "./components/MainPanel";
 import Inventory from "./components/Inventory";
 
 import { Container } from "reactstrap";
@@ -27,7 +27,7 @@ function App() {
           <AppNavbar />
           <Container>
             <AccessForm />
-            <CharacterScreen />
+            <MainPanel />
             <Inventory />
           </Container>
         </header>

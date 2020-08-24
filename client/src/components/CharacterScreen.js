@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { addCharacter, getCharacters } from "../actions/characterActions";
 
@@ -12,12 +12,6 @@ import Player from "../game/Player";
 
 import MessageLog from "./MessageLog";
 
-const StyledPaper = withStyles({
-  root: {
-    padding: "1rem",
-    marginTop: "1rem",
-  },
-})(Paper);
 class CharacterScreen extends Component {
   state = {
     player: null,
@@ -63,9 +57,9 @@ class CharacterScreen extends Component {
   render() {
     const { characters } = this.props.character;
     return (
-      <div>
+      <Fragment>
         {this.props.isAuthenticated ? (
-          <StyledPaper>
+          <div className="CharacterScreen">
             <h3> Cat</h3>
             <div className="avatarContainer">
               <div className="avatarArrowsContainer">
@@ -88,9 +82,9 @@ class CharacterScreen extends Component {
             <br></br>
 
             <MessageLog message={this.state.message} />
-          </StyledPaper>
+          </div>
         ) : null}
-      </div>
+      </Fragment>
     );
   }
 }
