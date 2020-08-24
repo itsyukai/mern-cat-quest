@@ -5,9 +5,17 @@ import characterReducer from "./characterReducer";
 import errorReducer from "./errorReducer";
 import authReducer from "./authReducer";
 
-export default combineReducers({
+const appReducer = combineReducers({
   inventory: inventoryReducer,
   character: characterReducer,
   error: errorReducer,
   auth: authReducer,
 });
+
+const rootReducer = (state, action) => {
+  if (action.type === "LOGOUT_SUCCESS") {
+    state = undefined;
+  }
+  return appReducer(state, action);
+};
+export default rootReducer;
