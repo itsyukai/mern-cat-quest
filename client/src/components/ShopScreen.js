@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-
+import Container from "@material-ui/core/Container";
+import Button from "@material-ui/core/Button";
 import TextField from "@material-ui/core/TextField";
 import Typography from "@material-ui/core/Typography";
 import Table from "@material-ui/core/Table";
@@ -17,21 +18,40 @@ import Paper from "@material-ui/core/Paper";
 const StyledContainer = withStyles({
   root: {
     width: "600px",
-    maxHeight: "400px",
+    maxHeight: "600px",
     margin: "auto",
     overflow: "auto",
   },
 })(TableContainer);
+const StyledOutterContainer = withStyles({
+  root: {
+    padding: "24px",
+    margin: "auto",
+    backgroundColor: "#f5f5f5",
+    display: "inline-block",
+    alignContent: "flex-end",
+  },
+})(Paper);
+const StyledOutterOutterContainerLol = withStyles({
+  root: {
+    display: "flex",
+    justifyContent: "center",
+  },
+})(Container);
 const StyledHeader = withStyles({
   root: {
     textAlign: "center",
+    marginBottom: "1rem",
+    alignContent: "flex-start",
   },
 })(Typography);
-const StyledTableCell = withStyles({
+const StyledTableRow = withStyles({
   root: {
-    width: "20%",
+    "&:nth-of-type(odd)": {
+      backgroundColor: "rgb(245 245 245)",
+    },
   },
-})(TableCell);
+})(TableRow);
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 99;
@@ -76,6 +96,11 @@ class ShopScreen extends Component {
     ],
   };
 
+  getTotal = () => {
+    return this.state.catalogue
+      .map((item) => item.price * item.quantity)
+      .reduce((sum, i) => sum + i, 0);
+  };
   handleQuantityChange = (e, index) => {
     let catalogue = [...this.state.catalogue];
     let item = { ...catalogue[index] };
@@ -93,11 +118,11 @@ class ShopScreen extends Component {
   render() {
     const { catalogue } = this.state;
     let displayCatalogue = catalogue.map((item, index) => (
-      <TableRow key={item.name}>
+      <StyledTableRow key={item.name}>
         <TableCell>{item.name}</TableCell>
         <TableCell align="right">{item.price} g</TableCell>
         <TableCell />
-        <StyledTableCell>
+        <TableCell>
           <TextField
             type="number"
             size="small"
@@ -106,31 +131,55 @@ class ShopScreen extends Component {
             onChange={(e) => this.handleQuantityChange(e, index)}
             inputProps={{ min: MIN_VALUE, max: MAX_VALUE }}
           />
-        </StyledTableCell>
+        </TableCell>
         <TableCell align="right">{item.price * item.quantity}</TableCell>
         <TableCell />
-      </TableRow>
+      </StyledTableRow>
     ));
 
     return (
       <Fragment>
         {this.props.isAuthenticated ? (
-          <StyledContainer component={Paper}>
+          <Fragment>
             <StyledHeader variant="h5">Shop</StyledHeader>
-            <Table size="small">
-              <TableHead>
-                <TableRow>
-                  <TableCell>Name</TableCell>
-                  <TableCell align="right">Price</TableCell>
-                  <TableCell />
-                  <StyledTableCell>Quantity</StyledTableCell>
-                  <TableCell align="right">Subtotal</TableCell>
-                  <TableCell />
-                </TableRow>
-              </TableHead>
-              <TableBody>{displayCatalogue}</TableBody>
-            </Table>
-          </StyledContainer>
+
+            <StyledOutterOutterContainerLol>
+              <StyledOutterContainer>
+                <StyledContainer component={Paper}>
+                  <Table size="small">
+                    <TableHead>
+                      <TableRow>
+                        <TableCell>Name</TableCell>
+                        <TableCell align="right">Price</TableCell>
+                        <TableCell />
+                        <TableCell>Quantity</TableCell>
+                        <TableCell align="right">Subtotal</TableCell>
+                        <TableCell />
+                      </TableRow>
+                    </TableHead>
+                    <TableBody>
+                      {displayCatalogue}
+                      <TableRow>
+                        <TableCell colSpan={3} align="right" />
+                        <TableCell>Total</TableCell>
+                        <TableCell align="right">{this.getTotal()}</TableCell>
+                        <TableCell />
+                      </TableRow>
+                      <TableRow>
+                        <TableCell colSpan={3} />
+                        <TableCell></TableCell>
+                        <TableCell>
+                          <Button variant="contained" color="default">
+                            Purchase
+                          </Button>
+                        </TableCell>
+                      </TableRow>
+                    </TableBody>
+                  </Table>
+                </StyledContainer>
+              </StyledOutterContainer>
+            </StyledOutterOutterContainerLol>
+          </Fragment>
         ) : null}
       </Fragment>
     );
