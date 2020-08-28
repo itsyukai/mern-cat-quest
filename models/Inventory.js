@@ -6,6 +6,10 @@ const InventorySchema = new Schema({
     type: String,
     required: true,
   },
+  gold: {
+    type: Number,
+    required: true,
+  },
   items: [
     {
       name: {

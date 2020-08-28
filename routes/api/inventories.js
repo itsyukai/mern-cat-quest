@@ -25,6 +25,7 @@ router.get("/", auth, async (req, res) => {
 router.post("/", auth, (req, res) => {
   const newInventory = new Inventory({
     owner: req.body.owner,
+    gold: req.body.gold,
     items: req.body.items,
   });
 
@@ -41,14 +42,19 @@ router.post("/", auth, (req, res) => {
 router.put("/", auth, (req, res) => {
   const updatedInventory = {
     owner: req.body.owner,
+    gold: req.body.gold,
     items: req.body.items,
   };
 
-  Inventory.findOneAndUpdate({ owner: req.body.owner }, updatedInventory, {
-    upsert: true,
+  // returnOriginal must be used instead of returnNewDocument
+  // Node driver vs Mongodb inconsistency
+  Inventory.findOneAndReplace({ owner: req.body.owner }, updatedInventory, {
+    returnOriginal: false,
     useFindAndModify: false,
   })
-    .then((inventory) => res.json(inventory))
+    .then((inventory) => {
+      res.json(inventory);
+    })
     .catch((err) => res.status(500).json({ err }));
 });
 

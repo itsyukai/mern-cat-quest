@@ -45,6 +45,7 @@ class AccessForm extends Component {
       ) {
         const newInventory = {
           owner: this.props.user._id,
+          gold: 0,
           items: [],
         };
         this.props.createInventory(newInventory);

@@ -6,8 +6,7 @@ import PropTypes from "prop-types";
 
 import color from "../imgs/CAT_SHEET.gif";
 import "./CharacterScreen.scss";
-import { Button, Paper } from "@material-ui/core";
-import { withStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 import Player from "../game/Player";
 
 import MessageLog from "./MessageLog";

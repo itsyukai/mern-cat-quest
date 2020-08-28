@@ -62,10 +62,15 @@ export const deleteInventory = () => (dispatch, getState) => {
 };
 
 export const updateInventory = (inventory) => (dispatch, getState) => {
-  axios.put(`/api/inventories/`, inventory, tokenConfig(getState)).then((res) =>
-    dispatch({
-      type: UPDATE_INVENTORY,
-      payload: res.data,
-    })
-  );
+  axios
+    .put(`/api/inventories/`, inventory, tokenConfig(getState))
+    .then((res) =>
+      dispatch({
+        type: UPDATE_INVENTORY,
+        payload: res.data,
+      })
+    )
+    .catch((err) =>
+      dispatch(returnErrors(err.response.data, err.response.status))
+    );
 };

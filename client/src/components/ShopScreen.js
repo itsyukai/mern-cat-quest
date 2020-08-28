@@ -12,8 +12,8 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import withStyles from "@material-ui/core/styles/withStyles";
-
 import Paper from "@material-ui/core/Paper";
+import { updateInventory } from "../actions/inventoryActions";
 
 const StyledContainer = withStyles({
   root: {
@@ -58,7 +58,9 @@ const MAX_VALUE = 99;
 class ShopScreen extends Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool,
-    inventory: PropTypes.array,
+    inventory: PropTypes.object,
+    updateInventory: PropTypes.func.isRequired,
+    userid: PropTypes.string,
   };
 
   state = {
@@ -102,19 +104,58 @@ class ShopScreen extends Component {
       .reduce((sum, i) => sum + i, 0);
   };
   handleQuantityChange = (e, index) => {
-    let catalogue = [...this.state.catalogue];
-    let item = { ...catalogue[index] };
+    let catalogue = JSON.parse(JSON.stringify(this.state.catalogue));
 
     if (e.target.value >= MIN_VALUE && e.target.value <= MAX_VALUE) {
-      item.quantity = e.target.value;
+      catalogue[index].quantity = e.target.value;
     } else if (e.target.value < MIN_VALUE) {
-      e.target.value = item.quantity = MIN_VALUE;
+      e.target.value = catalogue[index] = MIN_VALUE;
     } else if (e.target.value > MAX_VALUE) {
-      e.target.value = item.quantity = MAX_VALUE;
+      e.target.value = catalogue[index] = MAX_VALUE;
     }
-    catalogue[index] = item;
     this.setState({ catalogue });
   };
+
+  purchase = (e) => {
+    e.preventDefault();
+
+    if (this.props.inventory.gold > this.getTotal()) {
+      // using copy = {...inventory} or copy = inventory will make shallow copies
+      // thus mutating state
+      let inventoryDeepCopy = JSON.parse(JSON.stringify(this.props.inventory));
+      let catalogueDeepCopy = JSON.parse(JSON.stringify(this.state.catalogue));
+
+      inventoryDeepCopy.owner = this.props.userid;
+      inventoryDeepCopy.gold -= this.getTotal();
+
+      catalogueDeepCopy.map((shopItem) => {
+        if (shopItem.quantity > 0) {
+          const index = inventoryDeepCopy.items.findIndex(
+            (item) => item.name === shopItem.name
+          );
+          if (index > -1) {
+            inventoryDeepCopy.items[index].quantity += Number(
+              shopItem.quantity
+            );
+          } else {
+            const shopItemCopy = JSON.parse(JSON.stringify(shopItem));
+            inventoryDeepCopy.items.push(shopItemCopy);
+          }
+          shopItem.quantity = 0;
+        }
+      });
+      this.setState({
+        ...this.state,
+        catalogue: catalogueDeepCopy,
+      });
+      this.props.updateInventory(inventoryDeepCopy);
+    } else {
+      console.log(
+        "YOU'RE BROKE FOOL, also I need to have an actual error message"
+      );
+    }
+  };
+
   render() {
     const { catalogue } = this.state;
     let displayCatalogue = catalogue.map((item, index) => (
@@ -169,7 +210,11 @@ class ShopScreen extends Component {
                         <TableCell colSpan={3} />
                         <TableCell></TableCell>
                         <TableCell>
-                          <Button variant="contained" color="default">
+                          <Button
+                            variant="contained"
+                            color="default"
+                            onClick={this.purchase}
+                          >
                             Purchase
                           </Button>
                         </TableCell>
@@ -187,6 +232,7 @@ class ShopScreen extends Component {
 }
 const mapStateToProps = (state) => ({
   isAuthenticated: state.auth.isAuthenticated,
-  items: state.inventory.inventory,
+  inventory: state.inventory,
+  userid: state.auth._id,
 });
-export default connect(mapStateToProps, {})(ShopScreen);
+export default connect(mapStateToProps, { updateInventory })(ShopScreen);

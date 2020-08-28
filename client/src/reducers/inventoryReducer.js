@@ -7,7 +7,8 @@ import {
 } from "../actions/types";
 
 const initialState = {
-  inventory: [],
+  items: [],
+  gold: 0,
   loading: false,
 };
 
@@ -16,19 +17,23 @@ export default function (state = initialState, action) {
     case GET_INVENTORY:
       return {
         ...state,
-        inventory: action.payload.items,
+        gold: action.payload.gold,
+        items: action.payload.items,
         loading: false,
       };
     case CREATE_INVENTORY: {
       return {
         ...state,
-        inventory: action.payload.items,
+        gold: action.payload.inventory.gold,
+        items: action.payload.inventory.items,
       };
     }
     case UPDATE_INVENTORY: {
+      console.log(action.payload.gold);
       return {
         ...state,
-        inventory: action.payload.items,
+        gold: action.payload.gold,
+        items: action.payload.items,
       };
     }
     case INVENTORY_LOADING:
