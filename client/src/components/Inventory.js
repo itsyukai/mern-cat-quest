@@ -3,7 +3,6 @@ import { connect } from "react-redux";
 
 import PropTypes from "prop-types";
 
-import "./Inventory.scss";
 import { Button, Paper, List, ListItem } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
 
@@ -25,13 +24,13 @@ class Inventory extends Component {
   static propTypes = {
     user: PropTypes.object,
     isAuthenticated: PropTypes.bool,
-    inventory: PropTypes.array,
+    inventory: PropTypes.object,
   };
   handleClick = (i) => {};
   render() {
     const { inventory, isAuthenticated } = this.props;
     let displayInventory = inventory
-      ? inventory.map((item) => (
+      ? inventory.items.map((item) => (
           <StyledListItem key={item.name}>
             <div className="left">
               {item.name} : {item.quantity}
@@ -52,7 +51,7 @@ class Inventory extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  inventory: state.inventory.inventory,
+  inventory: state.inventory,
   isAuthenticated: state.auth.isAuthenticated,
   user: state.auth.user,
 });

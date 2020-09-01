@@ -3,6 +3,7 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import CharacterScreen from "./CharacterScreen";
 import ShopScreen from "./ShopScreen";
+import CraftScreen from "./CraftScreen";
 
 import { Button, Paper } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
@@ -25,6 +26,8 @@ class MainPanel extends Component {
     switch (this.state.activeTab) {
       case "shop":
         return <ShopScreen />;
+      case "craft":
+        return <CraftScreen />;
       case "character":
       default:
         return <CharacterScreen />;
@@ -51,6 +54,12 @@ class MainPanel extends Component {
                 onClick={() => this.handleTabs("shop")}
               >
                 Shop
+              </Button>
+              <Button
+                className="tab-craft"
+                onClick={() => this.handleTabs("craft")}
+              >
+                Craft
               </Button>
             </div>
             {this.getTabContent()}

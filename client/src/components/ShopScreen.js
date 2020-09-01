@@ -17,7 +17,7 @@ import { updateInventory } from "../actions/inventoryActions";
 
 const StyledContainer = withStyles({
   root: {
-    width: "600px",
+    maxWidth: "600px",
     maxHeight: "600px",
     margin: "auto",
     overflow: "auto",
@@ -55,6 +55,7 @@ const StyledTableRow = withStyles({
 
 const MIN_VALUE = 0;
 const MAX_VALUE = 99;
+
 class ShopScreen extends Component {
   static propTypes = {
     isAuthenticated: PropTypes.bool,
@@ -67,31 +68,37 @@ class ShopScreen extends Component {
     catalogue: [
       {
         name: "Potato",
-        desciption: "Boil em, mash em, stick em in a stew.",
+        desc: "Boil em, mash em, stick em in a stew.",
         price: 5,
         quantity: 0,
       },
       {
         name: "Carrot",
-        description: "They're not actually good for your eyes",
+        desc: "They're not actually good for your eyes",
         price: 3,
         quantity: 0,
       },
       {
+        name: "Beef",
+        desc: "made in china",
+        price: 5,
+        quantity: 0,
+      },
+      {
         name: "Bitterwort Root",
-        description: "Kinda gross",
+        desc: "Kinda gross",
         price: 15,
         quantity: 0,
       },
       {
         name: "Less Bitterwort Root",
-        description: "Less gross",
+        desc: "Less gross",
         price: 20,
         quantity: 0,
       },
       {
         name: "Super Bitterwort Root",
-        description: "Super gross",
+        desc: "Super gross",
         price: 5,
         quantity: 0,
       },
@@ -128,7 +135,7 @@ class ShopScreen extends Component {
       inventoryDeepCopy.owner = this.props.userid;
       inventoryDeepCopy.gold -= this.getTotal();
 
-      catalogueDeepCopy.map((shopItem) => {
+      catalogueDeepCopy.forEach((shopItem) => {
         if (shopItem.quantity > 0) {
           const index = inventoryDeepCopy.items.findIndex(
             (item) => item.name === shopItem.name

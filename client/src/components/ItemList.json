@@ -1,0 +1,21 @@
+[
+  {
+    "name": "potato",
+    "components": [],
+    "desc": "Boil em, mash em, stick em in a stew",
+    "price": 5
+  },
+  {
+    "name": "beef",
+    "components": [],
+    "price": 6
+  },
+
+  {
+    "name": "beef stew",
+    "components": ["potato", "beef"],
+    "desc": "It's wet and it tastes good",
+    "craftMessage": "Smells good",
+    "price": 15
+  }
+]
