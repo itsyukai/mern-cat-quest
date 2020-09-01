@@ -83,6 +83,11 @@ const StyledDialog = withStyles({
     color: "red",
   },
 })(Dialog);
+const StyledCard = withStyles({
+  root: {
+    minWidth: "300px",
+  },
+})(Card);
 
 class CraftScreen extends Component {
   static propTypes = {
@@ -108,25 +113,53 @@ class CraftScreen extends Component {
   onCombine = (e) => {
     e.preventDefault();
 
+    // organize ingredients from dropdowns
     let providedIngredients = [];
     this.state.ingredients.forEach((ingredient) => {
       if (ingredient !== "" && ingredient !== "nothing") {
-        providedIngredients.push(ingredient.toLowerCase());
+        providedIngredients.push(ingredient);
       }
     });
-    var found = false;
 
+    // compare ingredients provided with item components
+    var found = false;
     if (providedIngredients.length > 0) {
       var i = 0;
       while (i < itemList.length && !found) {
         if (this.arraysEqual(itemList[i].components, providedIngredients)) {
           found = true;
+          i--; // to keep index consistent
         }
         i++;
       }
     }
     if (found) {
-      this.setState({ item: itemList[i - 1] }, this.openDialog());
+      let inventoryDeepCopy = JSON.parse(JSON.stringify(this.props.inventory));
+
+      var needToAdd = true;
+      // Update inventory copy
+      inventoryDeepCopy.items.forEach((item) => {
+        // Subtract Ingredients
+        if (providedIngredients.indexOf(item.name) > -1) {
+          // already made sure quantity > 0 in mapInventoryToMenu
+          item.quantity -= 1;
+        }
+        if (item.name === itemList[i].name) {
+          item.quantity += 1;
+          needToAdd = false;
+        }
+      });
+      // No existing item
+      if (needToAdd) {
+        var item = JSON.parse(JSON.stringify(itemList[i]));
+        item["quantity"] = 1;
+        inventoryDeepCopy.items.push(item);
+      }
+
+      inventoryDeepCopy.owner = this.props.userid;
+
+      this.props.updateInventory(inventoryDeepCopy);
+      this.setState({ item: itemList[i] }, this.openDialog());
     } else {
       this.openDialog();
     }
@@ -166,17 +199,45 @@ class CraftScreen extends Component {
         open={this.state.dialogOpen}
         onClose={this.closeDialog}
       >
-        <Card>
+        <StyledCard>
           <CardContent>
-            <Typography>
-              {this.state.item != null ? "SUCCESS" : "FAILURE"}
-            </Typography>
-            <Typography>
-              {this.state.item != null ? this.state.item.name : null}
-            </Typography>
+            {this.state.item != null
+              ? this.renderSuccess()
+              : this.renderFailure()}
           </CardContent>
-        </Card>
+        </StyledCard>
       </StyledDialog>
+    );
+  }
+  renderSuccess() {
+    return (
+      <Fragment>
+        <Typography variant="h3" component="h3">
+          Success!
+        </Typography>
+        <Typography
+          align="center"
+          paragraph={true}
+          color="textSecondary"
+          variant="h5"
+          component="h5"
+        >
+          {this.state.item.name}
+        </Typography>
+        <StyledPaper>
+          <Typography paragraph={true} variant="body2" component="p">
+            {this.state.item.craftMessage}
+          </Typography>
+        </StyledPaper>
+      </Fragment>
+    );
+  }
+  renderFailure() {
+    return (
+      <Fragment>
+        <Typography>Failure!</Typography>
+        <Typography>Dang, maybe you should complain to the dev.</Typography>
+      </Fragment>
     );
   }
   render() {

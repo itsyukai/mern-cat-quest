@@ -16,6 +16,16 @@ const InventorySchema = new Schema({
         type: String,
         required: true,
       },
+      desc: {
+        type: String,
+      },
+      craftMessage: {
+        type: String,
+      },
+      components: [{ type: String }],
+      price: {
+        type: Number,
+      },
       quantity: {
         type: Number,
       },
