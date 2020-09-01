@@ -1,4 +1,3 @@
-
 .avatarContainer {
   width: 72px;
   margin: 0 auto;
@@ -26,12 +25,17 @@
       width: 72px;
       height: 72px;
       color: red;
-      background-image: url("../imgs/CAT_SHEET.gif");
+      background-image: url("../imgs/gray-cat.png");
     }
   }
 }
 
 h3 {
+  display: flex;
+  justify-content: center;
+}
+
+h2 {
   display: flex;
   justify-content: center;
 }

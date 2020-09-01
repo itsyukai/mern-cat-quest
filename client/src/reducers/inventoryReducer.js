@@ -29,7 +29,6 @@ export default function (state = initialState, action) {
       };
     }
     case UPDATE_INVENTORY: {
-      console.log(action.payload.gold);
       return {
         ...state,
         gold: action.payload.gold,

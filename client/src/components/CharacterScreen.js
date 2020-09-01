@@ -1,14 +1,10 @@
 import React, { Component, Fragment } from "react";
 import { connect } from "react-redux";
 import { addCharacter, getCharacters } from "../actions/characterActions";
-
 import PropTypes from "prop-types";
-
-import color from "../imgs/CAT_SHEET.gif";
 import "./CharacterScreen.scss";
 import Button from "@material-ui/core/Button";
 import Player from "../game/Player";
-
 import MessageLog from "./MessageLog";
 
 class CharacterScreen extends Component {
@@ -60,6 +56,7 @@ class CharacterScreen extends Component {
         {this.props.isAuthenticated ? (
           <div className="CharacterScreen">
             <h3> Cat</h3>
+            <h2>Under Construction</h2>
             <div className="avatarContainer">
               <div className="avatarArrowsContainer">
                 <div className="avatarLeftArrow" />
