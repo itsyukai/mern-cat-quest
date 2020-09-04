@@ -3,11 +3,14 @@
     "name": "Potato",
     "components": [],
     "desc": "Boil em, mash em, stick em in a stew",
+    "img": "images/food/potato.png",
     "price": 5
   },
   {
     "name": "Beef",
     "components": [],
+    "desc": "Her name was Sally",
+    "img": "images/food/beef.png",
     "price": 6
   },
 
@@ -16,6 +19,24 @@
     "components": ["Potato", "Beef"],
     "desc": "It's wet and it tastes good",
     "craftMessage": "Smells good",
+    "img": "images/food/beef_stew.png",
     "price": 15
+  },
+  {
+    "name": "Bitterwort Root",
+    "desc": "Kinda gross",
+    "price": 15
+  },
+  {
+    "name": "Less Bitterwort Root",
+    "desc": "Less gross",
+    "price": 20,
+    "quantity": 0
+  },
+  {
+    "name": "Super Bitterwort Root",
+    "desc": "Super gross",
+    "price": 5,
+    "quantity": 0
   }
 ]

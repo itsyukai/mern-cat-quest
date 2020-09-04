@@ -15,6 +15,8 @@ import FormHelperText from "@material-ui/core/FormHelperText";
 import MenuItem from "@material-ui/core/MenuItem";
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
+import CardMedia from "@material-ui/core/CardMedia";
+
 import Dialog from "@material-ui/core/Dialog";
 
 import { updateInventory } from "../actions/inventoryActions";
@@ -83,6 +85,19 @@ const StyledDialog = withStyles({
     color: "red",
   },
 })(Dialog);
+const StyledCardMediaContainer = withStyles({
+  root: {
+    margin: "auto",
+    width: "72px",
+    height: "72px",
+    // position: "relative",
+  },
+})(Paper);
+const StyledCardMedia = withStyles({
+  root: {
+    height: "72px",
+  },
+})(CardMedia);
 const StyledCard = withStyles({
   root: {
     minWidth: "300px",
@@ -224,6 +239,9 @@ class CraftScreen extends Component {
         >
           {this.state.item.name}
         </Typography>
+        <StyledCardMediaContainer>
+          <StyledCardMedia image={this.state.item.img} />
+        </StyledCardMediaContainer>
         <StyledPaper>
           <Typography paragraph={true} variant="body2" component="p">
             {this.state.item.craftMessage}
