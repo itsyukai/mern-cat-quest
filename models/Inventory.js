@@ -22,6 +22,9 @@ const InventorySchema = new Schema({
       craftMessage: {
         type: String,
       },
+      img: {
+        type: String,
+      },
       components: [{ type: String }],
       price: {
         type: Number,

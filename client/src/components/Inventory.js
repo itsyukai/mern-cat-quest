@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-
 import PropTypes from "prop-types";
+import Button from "@material-ui/core/Button";
+import Paper from "@material-ui/core/paper";
 
-import { Button, Paper, List, ListItem } from "@material-ui/core";
 import { withStyles } from "@material-ui/core/styles";
+import ItemCard from "./ItemCard";
 
 const StyledPaper = withStyles({
   root: {
@@ -12,12 +13,15 @@ const StyledPaper = withStyles({
     marginTop: "1rem",
   },
 })(Paper);
-
-const StyledListItem = withStyles({
+const StyledItemsContainer = withStyles({
   root: {
-    justifyContent: "space-between",
+    backgroundColor: "#f5f5f5",
+    padding: "1rem",
+    display: "flex",
+    flexWrap: "wrap",
+    justifyContent: "space-evenly",
   },
-})(ListItem);
+})(Paper);
 class Inventory extends Component {
   state = {};
 
@@ -30,21 +34,12 @@ class Inventory extends Component {
   render() {
     const { inventory, isAuthenticated } = this.props;
     let displayInventory = inventory
-      ? inventory.items.map((item) => (
-          <StyledListItem key={item.name}>
-            <div className="left">
-              {item.name} : {item.quantity}
-            </div>
-            <div className="right">
-              <Button>+</Button>/<Button>-</Button>
-            </div>
-          </StyledListItem>
-        ))
+      ? inventory.items.map((item) => <ItemCard key={item.name} item={item} />)
       : null;
     return isAuthenticated ? (
       <StyledPaper>
         <h3>Inventory</h3>
-        <List>{displayInventory}</List>
+        <StyledItemsContainer>{displayInventory}</StyledItemsContainer>
       </StyledPaper>
     ) : null;
   }
