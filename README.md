@@ -1,4 +1,9 @@
 # MERN Cat Quest
+A small project to experiment with building rpg elements on the web. Uses MongoDB, Express, React, and Node. Also uses Material-ui. 
+
+![Crafting Screen](images/CatQuest_Crafting.png)
+
+![Shopping Screen](images/CatQuest_Shop.png)
 
 SETUP:
 1. Clone repo
@@ -8,6 +13,3 @@ SETUP:
 4. run: npm client-install
 5. run: npm run dev
 
-Features:
-- Cat
-  
