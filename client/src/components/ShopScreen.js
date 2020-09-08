@@ -65,22 +65,26 @@ class ShopScreen extends Component {
   };
 
   state = {
+    // Static data since only one shop anyway
     catalogue: [
       {
         name: "Potato",
         desc: "Boil em, mash em, stick em in a stew.",
+        img: "images/food/potato.png",
         price: 5,
         quantity: 0,
       },
       {
         name: "Carrot",
         desc: "They're not actually good for your eyes",
+        img: "images/food/carrot.png",
         price: 3,
         quantity: 0,
       },
       {
         name: "Beef",
         desc: "made in china",
+        img: "images/food/beef.png",
         price: 5,
         quantity: 0,
       },
@@ -104,7 +108,6 @@ class ShopScreen extends Component {
       },
     ],
   };
-
   getTotal = () => {
     return this.state.catalogue
       .map((item) => item.price * item.quantity)

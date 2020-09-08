@@ -30,13 +30,11 @@
   {
     "name": "Less Bitterwort Root",
     "desc": "Less gross",
-    "price": 20,
-    "quantity": 0
+    "price": 20
   },
   {
     "name": "Super Bitterwort Root",
     "desc": "Super gross",
-    "price": 5,
-    "quantity": 0
+    "price": 5
   }
 ]

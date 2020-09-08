@@ -22,9 +22,11 @@ const StyledCardMedia = withStyles({
     width: "72px",
   },
 })(CardMedia);
-const StyledTitle = withStyles({
+const StyledTypography = withStyles({
   root: {
     overflow: "hidden",
+    textAlign: "center",
+    height: "1.5rem",
   },
 })(Typography);
 class ItemCard extends Component {
@@ -36,18 +38,18 @@ class ItemCard extends Component {
     return (
       <StyledCard>
         <CardContent>
-          <StyledTitle component="h5">
+          <StyledTypography component="h5">
             {item != null ? item.name : "???"}
-          </StyledTitle>
+          </StyledTypography>
 
           {item != null && item.img != null ? (
             <StyledCardMedia image={item.img} />
           ) : (
-            "no image :("
+            <StyledCardMedia image="images/missing.png" />
           )}
-          <Typography>
+          <StyledTypography>
             {item != null ? "Quantity: " + item.quantity : "???"}
-          </Typography>
+          </StyledTypography>
         </CardContent>
       </StyledCard>
     );
